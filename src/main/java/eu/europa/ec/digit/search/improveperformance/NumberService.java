@@ -1,6 +1,7 @@
 package eu.europa.ec.digit.search.improveperformance;
 
-import static java.util.stream.Collectors.toList;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,16 +9,14 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-import org.springframework.stereotype.Service;
-
-import lombok.extern.slf4j.Slf4j;
+import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @Service
 public class NumberService {
 
     private static final int SAMPLE_SIZE = 100_000;
-    private Random random = new Random();
+    private final Random random = new Random();
 
     public Integer findSmallestDuplicate(List<Integer> data) {
 
@@ -40,9 +39,19 @@ public class NumberService {
     }
 
     public Integer findSmallestDuplicateImproved(List<Integer> data) {
-        
-        throw new UnsupportedOperationException("Not implemented.");
+        final int[] count = new int[data.size()];
 
+        for (int i = 0; i < data.size() - 1; i++) {
+            count[data.get(i)]++;
+        }
+
+        for (int i = 0; i < count.length; i++) {
+            if (count[i] == 2) {
+                return i;
+            }
+        }
+
+        return null;
     }
 
     public List<Integer> generateData() {
