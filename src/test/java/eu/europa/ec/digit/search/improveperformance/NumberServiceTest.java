@@ -1,19 +1,14 @@
 package eu.europa.ec.digit.search.improveperformance;
 
-import static java.util.Arrays.asList;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.List;
-
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+
+import static java.util.Arrays.asList;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest
@@ -34,11 +29,12 @@ class NumberServiceTest {
         start = System.currentTimeMillis();
         Integer duplicateFast = numberService.findSmallestDuplicateImproved(data);
         long tookFast = System.currentTimeMillis() - start;
-        
+
+        log.info("slow duplicate: {}, fast duplicate: {}", duplicateSlow, duplicateFast);
         assertEquals(duplicateSlow, duplicateFast);
+        log.info("slow speed: {}, fast speed: {}", tookSlow, tookFast);
         assertTrue(tookSlow > tookFast*1000);
-        log.info("slow: {}, fast: {}", tookSlow, tookFast);
-        
+
         
     }
     
